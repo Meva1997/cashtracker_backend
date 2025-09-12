@@ -101,7 +101,7 @@ export class AuthController {
 
       if (!user) {
         const error = new Error("User does not exist");
-        return res.status(404).json({ message: error.message });
+        return res.status(404).json({ error: error.message });
       }
 
       user.token = generateToken();
@@ -126,10 +126,10 @@ export class AuthController {
 
       if (!tokenExists) {
         const error = new Error("Invalid token");
-        return res.status(404).json({ message: error.message });
+        return res.status(404).json({ error: error.message });
       }
 
-      res.json("Token is valid");
+      res.json("Token is valid, proceed to reset password");
     } catch (error) {
       //console.log(error);
       return res.status(500).json({ message: "Internal server error" });
@@ -145,7 +145,7 @@ export class AuthController {
 
       if (!user) {
         const error = new Error("Invalid token");
-        return res.status(404).json({ message: error.message });
+        return res.status(404).json({ error: error.message });
       }
 
       user.password = await hashPassword(password);
