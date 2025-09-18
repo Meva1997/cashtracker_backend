@@ -2,12 +2,17 @@
 
 CashTracker is a RESTful backend for managing personal finances. It focuses on clean architecture, robust validation, secure authentication, and a well-tested codebase. Core capabilities include:
 
-- Budget management: create, update, list, delete budgets.
-- Expense tracking: record, categorize, filter, and delete expenses.
-- Secure authentication: JWT-based login and route protection.
-- Strong input validation and error handling for predictable API behavior.
-
 This project is built to showcase backend engineering skills and decisions for potential employers. It is not intended as a turnkey product or a shared template.
+
+---
+
+## Key Features
+
+- **Budget Management:** Create, update, list, and delete budgets.
+- **Expense Tracking:** Record, categorize, filter, and delete expenses.
+- **Secure Authentication:** JWT-based user authentication and route protection.
+- **Input Validation:** Strong input validation and error handling for predictable API responses.
+- **Testing:** Comprehensive unit and integration tests with Jest and Supertest.
 
 ---
 
@@ -31,6 +36,41 @@ This project is built to showcase backend engineering skills and decisions for p
   - Jest + Supertest for unit and integration tests
   - Coverage reporting
   - Pre-test data cleanup to ensure isolated, repeatable tests
+
+---
+
+## Architecture & Code Structure
+
+- **TypeScript-first:** Strong typing and autocompletion support.
+- **Layered Structure:** Clear separation between routing, controllers, services, and models for maintainability.
+- **Stateless Auth:** Uses JWT for scalable, sessionless authentication.
+- **Validation-first:** All inputs are validated through express-validator for consistent error responses.
+- **Security:** Rate limiting, password hashing, and environment-based configuration.
+- **Logging:** HTTP request logging using morgan.
+- **Testing:** Supertest for HTTP flow testing, Jest for logic/unit testing, with test data reset before each run.
+
+### Typical Project Structure
+
+```
+cashtracker_backend/
+│
+├── src/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   ├── middlewares/
+│   ├── utils/
+│   └── data/
+│
+├── tests/
+├── dist/
+├── .env
+├── package.json
+├── tsconfig.json
+├── README.md
+└── ...
+```
 
 ---
 
@@ -74,19 +114,6 @@ ts-node ./src/data/index.ts --clear
 
 ---
 
-## Architecture & Design Notes
-
-- TypeScript-first: Strong typing and editor tooling for reliability and readability.
-- Layered structure: Separation of concerns (routing, controllers, services, models) to keep business logic maintainable.
-- Stateless auth: JWT for scalable, sessionless authentication.
-- Validation-first: All inputs pass through express-validator; consistent error responses simplify client handling.
-- Operational safety:
-  - Rate limiting reduces abuse vectors.
-  - Centralized error handling and request logging via morgan.
-- Testability: Supertest covers HTTP flows; Jest unit tests focus on logic, with isolated test data per run.
-
----
-
 ## Project Scope
 
 This repository is a personal portfolio project designed to demonstrate backend engineering practices and decision-making. It is not positioned as a reusable template or production-ready package.
@@ -106,6 +133,12 @@ While external contributions are not the goal of this repository, code-quality i
 ## License
 
 ISC License — see the LICENSE file for details.
+
+---
+
+## Project Status
+
+This repository is a personal portfolio project to demonstrate backend engineering skills and best practices. It is not a production-ready template.
 
 ---
 
