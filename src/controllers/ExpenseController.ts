@@ -6,6 +6,7 @@ export class ExpensesController {
     try {
       const expense = await Expense.create(req.body);
       expense.budgetId = req.budget.id; // Assign the budgetId from the request's budget property
+
       await expense.save();
       res.status(201).json("Expense created");
     } catch (error) {

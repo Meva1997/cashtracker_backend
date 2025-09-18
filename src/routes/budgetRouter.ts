@@ -8,6 +8,7 @@ import {
 } from "../middleware/budget";
 import { ExpensesController } from "../controllers/ExpenseController";
 import {
+  belongsToBudget,
   validateExpenseExists,
   validateExpenseId,
   validateExpenseInput,
@@ -25,6 +26,7 @@ router.param("budgetId", hasAccess); // Middleware to check if the authenticated
 
 router.param("expenseId", validateExpenseId); // Middleware to validate expense ID, this means that every route with :expenseId will first run this middleware
 router.param("expenseId", validateExpenseExists); // Middleware to check if expense exists, this means that every route with :expenseId will first run this middleware
+router.param("expenseId", belongsToBudget); // Middleware to check if the authenticated user has access to the expense and remember to add this after validateExpenseExists and after authenticate
 
 // Define your budget-related routes here
 router.get("/", BudgetController.getAll); // Example route to get all budgets

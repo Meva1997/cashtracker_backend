@@ -175,7 +175,7 @@ export class AuthController {
       );
       if (!isPasswordCorrect) {
         const error = new Error("Current password is incorrect");
-        return res.status(401).json({ message: error.message });
+        return res.status(401).json({ error: error.message });
       }
       user.password = await hashPassword(password);
       await user.save();
@@ -195,11 +195,35 @@ export class AuthController {
       const isPasswordCorrect = await verifyPassword(password, user.password);
       if (!isPasswordCorrect) {
         const error = new Error("Current password is incorrect");
-        return res.status(401).json({ message: error.message });
+        return res.status(401).json({ error: error.message });
       }
       res.json("Password is correct");
     } catch (error) {
       //console.log(error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  };
+
+  static updateProfile = async (req: Request, res: Response) => {
+    const { name, email } = req.body;
+    try {
+      const existingUser = await User.findOne({ where: { email } });
+      if (existingUser && existingUser.id !== req.user.id) {
+        const error = new Error("A user with this email already exists");
+        return res.status(409).json({ error: error.message });
+      }
+
+      await User.update(
+        {
+          name,
+          email,
+        },
+        {
+          where: { id: req.user.id },
+        }
+      );
+      res.json("Profile updated successfully");
+    } catch (error) {
       return res.status(500).json({ message: "Internal server error" });
     }
   };

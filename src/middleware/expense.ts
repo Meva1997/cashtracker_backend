@@ -1,3 +1,4 @@
+import { hasAccess } from "./budget";
 import type { Request, Response, NextFunction } from "express";
 import { param, body, validationResult } from "express-validator";
 import Expense from "../models/Expense";
@@ -56,11 +57,24 @@ export const validateExpenseExists = async (
     const expense = await Expense.findByPk(expenseId);
     if (!expense) {
       const error = new Error("Expense not found");
-      return res.status(404).json({ message: error.message });
+      return res.status(404).json({ error: error.message });
     }
     req.expense = expense; // Attach the found expense to the request object for further use
     next();
   } catch (error) {
     res.status(500).json({ error: "Server Error" });
   }
+};
+
+export const belongsToBudget = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.budget.id !== req.expense.budgetId) {
+    const error = new Error("Invalid Action");
+    return res.status(403).json({ error: error.message });
+  }
+
+  next();
 };
